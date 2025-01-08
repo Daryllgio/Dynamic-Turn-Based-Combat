@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "Turn_Based_Battle/1.0.0": {
+        "runtime": {
+          "Turn_Based_Battle.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Turn_Based_Battle/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

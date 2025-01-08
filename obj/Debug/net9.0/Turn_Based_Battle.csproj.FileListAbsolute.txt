@@ -1,0 +1,14 @@
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/Turn_Based_Battle.GeneratedMSBuildEditorConfig.editorconfig
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/Turn_Based_Battle.AssemblyInfoInputs.cache
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/Turn_Based_Battle.AssemblyInfo.cs
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/Turn_Based_Battle.csproj.CoreCompileInputs.cache
+/Users/d.gio/Turn_Based_Battle/bin/Debug/net9.0/Turn_Based_Battle
+/Users/d.gio/Turn_Based_Battle/bin/Debug/net9.0/Turn_Based_Battle.deps.json
+/Users/d.gio/Turn_Based_Battle/bin/Debug/net9.0/Turn_Based_Battle.runtimeconfig.json
+/Users/d.gio/Turn_Based_Battle/bin/Debug/net9.0/Turn_Based_Battle.dll
+/Users/d.gio/Turn_Based_Battle/bin/Debug/net9.0/Turn_Based_Battle.pdb
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/Turn_Based_Battle.dll
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/refint/Turn_Based_Battle.dll
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/Turn_Based_Battle.pdb
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/Turn_Based_Battle.genruntimeconfig.cache
+/Users/d.gio/Turn_Based_Battle/obj/Debug/net9.0/ref/Turn_Based_Battle.dll
