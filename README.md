@@ -1,5 +1,5 @@
 Turn-Based Battle Game
-A C# console-based turn-based battle simulation game where players take on the role of a hero battling through a campaign of enemies. 
+A C# turn-based battle simulation game where players take on the role of a hero battling through a campaign of enemies. 
 The game combines strategic decision-making, dynamic combat mechanics, and inventory management to deliver an engaging experience.
 
 I) Features
