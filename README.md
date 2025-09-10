@@ -1,7 +1,3 @@
-Here’s a **tight, professional, recruiter-ready README** for your C# turn-based battle game—grounded 100% in your code. Copy-paste into `README.md`.
-
----
-
 # Turn-Based Battle Game ⚔️
 
 ## **Overview**
