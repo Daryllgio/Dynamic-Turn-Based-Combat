@@ -1,89 +1,164 @@
-Turn-Based Battle Game
-A C# turn-based battle simulation game where players take on the role of a hero battling through a campaign of enemies. 
-The game combines strategic decision-making, dynamic combat mechanics, and inventory management to deliver an engaging experience.
+Here’s a **tight, professional, recruiter-ready README** for your C# turn-based battle game—grounded 100% in your code. Copy-paste into `README.md`.
 
-I) Features
+---
 
-1. Turn-Based Combat
+# Turn-Based Battle Game ⚔️
 
-Players and enemies take alternating turns to perform actions like:
+## **Overview**
 
- - Attack: Deal damage to the opponent.
- - Heal: Restore health.
- - Use Skills: Employ strategic abilities such as:
- - Fireball: Inflicts burn damage over time.
- - Shield Bash: Stuns the enemy for one turn.
- - Use Items: Leverage items like health potions for survival.
+A console-based **C#**/**.NET** turn-based battle simulator where a **Hero** fights through a multi-battle **campaign** against a **Goblin**, **Orc**, and **Dragon**. The game showcases clean OOP design (Units, Skills, Inventory), a battle loop with player choices, basic enemy AI, and a simple campaign progression system. &#x20;
 
-2. Campaign Mode
+---
 
-Progress through battles against a variety of enemies:
+## **Key Features**
 
- - Goblin: Agile but weak.
- - Orc: Balanced with moderate strength.
- - Dragon: A challenging boss with high damage.
- - Earn rewards like health potions after each victory to prepare for the next challenge.
+* **Core Turn System** – Player chooses **Attack**, **Heal**, **Use Skill**, or **Use Item** each round; then the enemy takes a turn.&#x20;
+* **Skills** – Built-in skills: **Fireball** (applies a *Burn* status flag) and **Shield Bash** (*Stun*). Stun is enforced in the turn loop (enemy skips its next turn). Burn is recorded as a status for future DOT extensions. &#x20;
+* **Inventory & Items** – A simple dictionary-backed inventory with **Health Potions** that trigger unit healing; includes listing and use logic.&#x20;
+* **Campaign Mode** – Sequential battles vs **Goblin → Orc → Dragon**, with a post-fight **potion reward** and campaign victory/defeat handling.&#x20;
+* **Unit Model** – HP, attack power, heal power, status effect handling; randomized damage/heal rolls; death checks.&#x20;
 
-Complete the campaign by defeating all enemies without losing the hero.
+---
 
-3. Inventory System
+## **Architecture**
 
- - Maintain and manage a collection of usable items. 
- - Use health potions to heal during battles.
- - Inventory dynamically updates as items are used or earned.
+```mermaid
+flowchart LR
+  P["Program.cs\nentry point"] --> CM["CampaignManager\n(orchestrates campaign)"];
+  CM --> BM["BattleManager\n(player vs enemy loop)"];
+  BM --> U1["Unit (Hero)"]; BM --> U2["Unit (Enemy)"];
+  BM --> INV["Inventory\n(use items)"]; BM --> SK["Skill\n(Fireball, Shield Bash)"];
+```
 
-4. Dynamic AI and Status Effects
+* **Program.cs** wires the game: creates the Hero, seeds the inventory, and launches the campaign.&#x20;
+* **CampaignManager** sequences enemies and grants post-fight rewards.&#x20;
+* **BattleManager** runs the interactive loop and enemy AI (attack/heal, with stun skip).&#x20;
+* **Inventory** and **Skill** provide composable actions. &#x20;
 
- - Enemy AI: Decides between attacking or healing based on the battle context. Reacts to status effects like "Burn" or "Stun."
- - Status Effects:
- - Burn: Deals damage over time.
- - Stun: Skips the enemy’s next turn.
+---
 
-II) Gameplay Example
+## **Gameplay Loop (from code)**
 
-Player's Turn:
-
+```text
 Hero HP: 100 | Goblin HP: 70
-Choose an action:
+Player's turn! Choose an action:
 1. Attack
 2. Heal
 3. Use Skill
 4. Use Item
+```
 
-Enemy’s Turn:
+* **Attack** – Randomized damage based on attack power.&#x20;
+* **Heal** – Randomized heal up to max HP.&#x20;
+* **Use Skill** – `Fireball` applies **Burn** (status flag); `Shield Bash` applies **Stun** (enemy’s next turn is skipped, then status cleared). &#x20;
+* **Use Item** – Choose an item (e.g., **Health Potion**) from the inventory to heal.&#x20;
 
+> Enemy AI: if **Stunned**, it **skips**; otherwise chooses between **Attack** or **Heal** randomly.&#x20;
+
+---
+
+## **Project Structure**
+
+```
+.
+├─ Program.cs                 # Entry point (creates Hero, seeds inventory, starts campaign)
+├─ CampaignManager.cs         # Enemy sequence, rewards, victory/defeat flow
+├─ BattleManager.cs           # Per-battle loop: choices, enemy AI, status handling
+├─ Unit.cs                    # Unit stats, attack/heal RNG, status flags, death checks
+├─ Skill.cs                   # Fireball (Burn), Shield Bash (Stun)
+├─ Inventory.cs               # Items dict, use/list logic (Health Potion)
+└─ Turn_Based_Battle.csproj   # .NET project file
+```
+
+Cited from the implementation: Program, CampaignManager, BattleManager, Unit, Skill, and Inventory.     &#x20;
+
+---
+
+## **How to Run**
+
+> Requires **.NET SDK 9.0** (project targets `net9.0`, per build output path).
+
+```bash
+# from the project directory (where the .csproj lives)
+dotnet restore
+dotnet run
+```
+
+Or build and run explicitly:
+
+```bash
+dotnet build -c Release
+dotnet bin/Release/net9.0/Turn_Based_Battle.dll
+```
+
+---
+
+## **Design Notes**
+
+* **Randomized Combat** – Damage and healing use a simple RNG range around base power to keep encounters varied.&#x20;
+* **Status Effects** – `Stun` is **fully enforced** in the loop (skip then clear). `Burn` is **tracked** as a status flag (and logged) and is ideal for a future damage-over-time tick. &#x20;
+* **Campaign Pacing** – Three escalating enemies with a **potion reward** after each victory keeps resource pressure meaningful.&#x20;
+
+---
+
+## **API (Core Classes)**
+
+* **`Unit`**
+
+  * Props: `Hp`, `IsDead`, `StatusEffect`, `UnitName`
+  * Methods: `Attack(Unit)`, `TakeDamage(int)`, `Heal()`, `ApplyStatusEffect(string)`, `ClearStatusEffect()`.&#x20;
+
+* **`Skill`**
+
+  * `Use(Unit caster, Unit target)` → applies damage and optional status (`Burn`/`Stun`).&#x20;
+
+* **`Inventory`**
+
+  * `AddItem(name,count)`, `UseItem(name, target)`, `ShowInventory()`. **Health Potion** triggers `Unit.Heal()`.&#x20;
+
+* **`BattleManager`**
+
+  * `StartBattle()` → player command loop; AI + status handling; victory/defeat prints.&#x20;
+
+* **`CampaignManager`**
+
+  * `StartCampaign(Unit, Inventory)` → Goblin → Orc → Dragon; reward potions.&#x20;
+
+---
+
+## **Sample Session**
+
+```text
+A wild Goblin appears!
+Hero HP: 100 | Goblin HP: 70
+Player's turn! Choose an action:
+1. Attack
+2. Heal
+3. Use Skill
+4. Use Item
+...
+Enemy's turn!
 Goblin attacks Hero for 15 damage!
-
-Victory:
-
+...
+Victory! You defeated the enemy.
 You defeated the Goblin! Prepare for the next battle.
+```
 
-III) Technologies Used
+(Directly aligned with the console prompts and flow in `BattleManager.StartBattle()` and `CampaignManager.StartCampaign()`.) &#x20;
 
- - C#: Core programming language.
- - .NET Framework: Used for building and running the application.
- - Object-Oriented Programming (OOP):
- - Modular design for units, skills, inventory, and battle management.
+---
 
-IV) Project Structure
+## **Roadmap**
 
- - Unit.cs: Defines player and enemy attributes such as health, attack power, and healing abilities.
+* **DOT engine** for **Burn** (apply damage at round start).
+* **Status system** upgrade (stacking buffs/debuffs, durations).
+* **Leveling & XP**, enemy scaling, more skills/items.
+* **Save/Load** runs; rich **GUI** (WinForms/WPF/MAUI) on top of the same core.
 
- - Skill.cs: Implements skills with special effects like "Burn" and "Stun."
+---
 
- - Inventory.cs: Manages items like health potions for use during battles.
+## **Author**
 
- - BattleManager.cs: Orchestrates individual battles between the player and enemies.
+**Daryll Giovanny Bikak Mbal** — showcasing C# OOP, simple AI, and game-loop design.
 
- - CampaignManager.cs: Oversees campaign progression through multiple battles.
-
-Planned Enhancements
-
-V) Add a graphical user interface (GUI) for better visualization and interactivity.
- - Introduce a leveling system with experience points (XP) and skill upgrades.
- - Add more enemy types, skills, and items for variety.
- - Implement save/load functionality for campaign progress.
-
-Acknowledgments
-Developed by Daryll Giovanny Bikak Mbal as a demonstration of C# programming skills and object-oriented design principles.
-
+---
