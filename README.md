@@ -156,5 +156,3 @@ You defeated the Goblin! Prepare for the next battle.
 ## **Author**
 
 **Daryll Giovanny Bikak Mbal** — showcasing C# OOP, simple AI, and game-loop design.
-
----
