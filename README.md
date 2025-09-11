@@ -1,4 +1,4 @@
-# Turn-Based Battle Game ⚔️
+# Turn-Based Battle Game
 
 ## **Overview**
 
